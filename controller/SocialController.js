@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = 'db/data social graph.json';
 
 //separate
+
+//helper
 const findPerson = (db,id) =>{
     return db.find(person=>person.id == id)
 }
@@ -10,8 +12,8 @@ const returnListOfPeople = (db,peopleList) => {
     return peopleList.map(person=>findPerson(db,person))
 }
 
-//
-const listOfPersonFriends = (db,id) => {
+//model
+const getPersonFriends = (db,id) => {
     let person = findPerson(db,id);
     if(person){
         return returnListOfPeople(db,person.friends)  
@@ -21,25 +23,39 @@ const listOfPersonFriends = (db,id) => {
     }
 }
 
-const listOfFriendsOfFriends = (db,id) => {
+const getFriendsOfFriends = (db,id) => {
     let person = findPerson(db,id);
     if(person){
         let listOfPersonFriends = returnListOfPeople(db,person.friends) 
-        let listOfFriendsOfFriend = [];
-        listOfPersonFriends.forEach(friend=>listOfFriendsOfFriend.push(...friend.friends))
-        uniqueListOfFriendsOfFriend=new Set(listOfFriendsOfFriend)
+        let listOfFriendsOfFriends = [];
+        listOfPersonFriends.forEach(friend=>listOfFriendsOfFriends.push(...friend.friends))
+        uniqueListOfFriendsOfFriends=new Set(listOfFriendsOfFriends)
         for(personFriend of person.friends)
         {
-            uniqueListOfFriendsOfFriend.delete(personFriend)
+            uniqueListOfFriendsOfFriends.delete(personFriend)
         }
-        return returnListOfPeople(db,[...uniqueListOfFriendsOfFriend])
+        return returnListOfPeople(db,[...uniqueListOfFriendsOfFriends])
     }
     else {
         return "User doesn't exist";
     }
 }
 
-//
+const getSugestedFriends = (db,id) => {
+    let person = findPerson(db,id);
+    if(person){
+        let listOfPersonFriends = returnListOfPeople(db,person.friends) 
+        let listOfFriendsOfFriends = [];
+        listOfPersonFriends.forEach(friend=>listOfFriendsOfFriends.push(...friend.friends))
+        console.log(listOfFriendsOfFriends)
+        return returnListOfPeople(db,[...listOfFriendsOfFriends])
+    }
+    else {
+        return "User doesn't exist";
+    }
+}
+
+//Keep
 const directFriends = (req,res) => {
 
     const id=req.params.id;
@@ -51,7 +67,7 @@ const directFriends = (req,res) => {
         else
         {
             let db = JSON.parse(data)
-            res.send(listOfPersonFriends(db,id)); 
+            res.send(getPersonFriends(db,id)); 
         }
     })
 }
@@ -67,7 +83,22 @@ const friendsOfFriends = (req,res) => {
         else
         {
             let db = JSON.parse(data)
-            res.send(listOfFriendsOfFriends(db,id)); 
+            res.send(getFriendsOfFriends(db,id)); 
+        }
+    })
+}
+
+const suggestedFriends = (req,res) => {
+    const id=req.params.id;
+
+    fs.readFile(path,(err, data)=>{
+        if(err){
+            res.send(err);
+        }
+        else
+        {
+            let db = JSON.parse(data)
+            res.send(getSugestedFriends(db,id)); 
         }
     })
 }
@@ -75,5 +106,6 @@ const friendsOfFriends = (req,res) => {
 
 module.exports={
     directFriends,
-    friendsOfFriends
+    friendsOfFriends,
+    suggestedFriends
 }

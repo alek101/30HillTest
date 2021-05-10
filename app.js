@@ -16,3 +16,4 @@ app.get('/',(req, res) => {
 
 app.get('/directFriends/:id', socialController.directFriends);
 app.get('/friendsOfFriends/:id', socialController.friendsOfFriends);
+app.get('/suggestedFriends/:id', socialController.suggestedFriends);
