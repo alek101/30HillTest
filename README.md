@@ -3,7 +3,12 @@
     npm install
     node app
 
-    
+    -For direct friends:
+    /directFriends/:id
+    -For friends of friends
+    /friendsOfFriends/:id
+    -For suggested friends
+    /suggestedFriends/:id
 
 # 30HillTest
  30 Hil; description test
