@@ -34,10 +34,10 @@ const getFriendsOfFriends = (db,id) => {
         {
             uniqueListOfFriendsOfFriends.delete(personFriend)
         }
-        console.log(uniqueListOfFriendsOfFriends,id)
-        uniqueListOfFriendsOfFriends.delete(id)
-        console.log(uniqueListOfFriendsOfFriends,id)
-        return returnListOfPeople(db,[...uniqueListOfFriendsOfFriends])
+        
+        uniqueListOfFriendsOfFriends=[...uniqueListOfFriendsOfFriends].filter(friend=>friend!=id)
+        
+        return returnListOfPeople(db,uniqueListOfFriendsOfFriends)
     }
     else {
         return "User doesn't exist";
