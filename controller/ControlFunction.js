@@ -12,7 +12,7 @@ const controlFunction = (req,res,lamda) => {
         else
         {
             let db = JSON.parse(data)
-            res.send(lamda(db,id)); 
+            res.send(JSON.stringify(lamda(db,id))); 
         }
     })
 }
