@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = 'db/data social graph.json';
 
+//function to read json file database and apply function from model
 const controlFunction = (req,res,lamda) => {
     const id=req.params.id;
 

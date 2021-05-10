@@ -1,6 +1,7 @@
 const Model = require('../model/Model');
 const ControlFunction = require('./ControlFunction');
 
+//controller
 const directFriends = (req,res) => {
     ControlFunction.controlFunction(req,res,Model.getPersonFriends)
 }
