@@ -27,8 +27,12 @@ const listOfFriendsOfFriends = (db,id) => {
         let listOfPersonFriends = returnListOfPeople(db,person.friends) 
         let listOfFriendsOfFriend = [];
         listOfPersonFriends.forEach(friend=>listOfFriendsOfFriend.push(...friend.friends))
-        uniqueListOfFriendsOfFriend=[...new Set(listOfFriendsOfFriend)]
-        return returnListOfPeople(db,uniqueListOfFriendsOfFriend)
+        uniqueListOfFriendsOfFriend=new Set(listOfFriendsOfFriend)
+        for(personFriend of person.friends)
+        {
+            uniqueListOfFriendsOfFriend.delete(personFriend)
+        }
+        return returnListOfPeople(db,[...uniqueListOfFriendsOfFriend])
     }
     else {
         return "User doesn't exist";
