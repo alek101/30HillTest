@@ -10,6 +10,8 @@
     -For suggested friends
     /suggestedFriends/:id
 
+Made by Aleksandar Petrovic
+
 # 30HillTest
  30 Hil; description test
 
