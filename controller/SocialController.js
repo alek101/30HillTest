@@ -34,6 +34,9 @@ const getFriendsOfFriends = (db,id) => {
         {
             uniqueListOfFriendsOfFriends.delete(personFriend)
         }
+        console.log(uniqueListOfFriendsOfFriends,id)
+        uniqueListOfFriendsOfFriends.delete(id)
+        console.log(uniqueListOfFriendsOfFriends,id)
         return returnListOfPeople(db,[...uniqueListOfFriendsOfFriends])
     }
     else {
@@ -47,8 +50,17 @@ const getSugestedFriends = (db,id) => {
         let listOfPersonFriends = returnListOfPeople(db,person.friends) 
         let listOfFriendsOfFriends = [];
         listOfPersonFriends.forEach(friend=>listOfFriendsOfFriends.push(...friend.friends))
-        console.log(listOfFriendsOfFriends)
-        return returnListOfPeople(db,[...listOfFriendsOfFriends])
+        listOfFriendsOfFriends.sort((a,b)=>a-b)
+        let listOfSuggestedFriends = new Set();
+        let arrayLength = listOfFriendsOfFriends.length;
+        for (i=0; i<arrayLength-1; i++)
+        {
+            if(listOfFriendsOfFriends[i]==listOfFriendsOfFriends[i+1] && !person.friends.some(friend=>friend==listOfFriendsOfFriends[i]) && listOfFriendsOfFriends[i]!=id)
+            {
+                listOfSuggestedFriends.add(listOfFriendsOfFriends[i])
+            }
+        }
+        return returnListOfPeople(db,[...listOfSuggestedFriends])
     }
     else {
         return "User doesn't exist";
