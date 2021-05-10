@@ -1,3 +1,10 @@
+# Instruction
+    download
+    npm install
+    node app
+
+    
+
 # 30HillTest
  30 Hil; description test
 
