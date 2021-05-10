@@ -13,8 +13,6 @@
 Made by Aleksandar Petrovic
 
 # 30HillTest
- 30 Hil; description test
-
  Dear candidate,
 
  
