@@ -4,11 +4,11 @@
     node app
 
     -For direct friends:
-    /directFriends/:id
+    /api/directFriends/:id
     -For friends of friends
-    /friendsOfFriends/:id
+    /api/friendsOfFriends/:id
     -For suggested friends
-    /suggestedFriends/:id
+    /api/suggestedFriends/:id
 
 Made by Aleksandar Petrovic
 

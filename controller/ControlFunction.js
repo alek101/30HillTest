@@ -7,12 +7,21 @@ const controlFunction = (req,res,lamda) => {
 
     fs.readFile(path,(err, data)=>{
         if(err){
-            res.send(err);
+            res.status(501).send(err);
         }
         else
         {
-            let db = JSON.parse(data)
-            res.send(JSON.stringify(lamda(db,id))); 
+            let db = JSON.parse(data);
+            let result=lamda(db,id);
+            if(result == "User doesn't exist")
+            {
+                res.status(204).send(JSON.stringify(result));
+            }
+            else
+            {
+                res.send(JSON.stringify(result));   
+            }
+            
         }
     })
 }
