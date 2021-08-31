@@ -8,6 +8,7 @@ directFriends = await User.find({id}).lean().friends;
 
 // we want person that have direct firends in his friend list
 // but that person couldn't be one of direct friends, or the begin person
+
 friendsOfFriends = await User.distinct(id, {
     friends: { $in: directFriends },
     id: { $nin: directFriends },
