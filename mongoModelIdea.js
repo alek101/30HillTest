@@ -15,6 +15,7 @@ friendsOfFriends = await User.distinct(id, {
 })
 
 // III Suggested firends
+
 directFriends = await User.find({id}).lean().friends;
 
 suggestFriends = await User.aggregate([
