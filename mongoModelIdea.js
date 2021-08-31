@@ -18,6 +18,10 @@ friendsOfFriends = await User.distinct(id, {
 
 directFriends = await User.find({id}).lean().friends;
 
+// first we find all friends of friends
+// than we get distinct one by group as well as we are counting how many join friends they have with begginging person
+// and we are filtering results to have 2 by another match
+
 suggestFriends = await User.aggregate([
     { 
         $match: {
