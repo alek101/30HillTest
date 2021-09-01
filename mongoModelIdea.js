@@ -36,12 +36,16 @@ suggestFriends = await User.aggregate([
         }      
     },
     {
-        $group: { 
-            _id: '$id',
+        $project: { 
             numberOfJoinFriends: { $size: { $setIntersection: [ directFriends, '$friends' ]}}
         }
     },
     {
         $match: { numberOfJoinFriends: { $gte: 2 } }
-    }
+    },
+    {
+        $project: {
+            id: 1
+        }
+    }  
 ])
