@@ -10,9 +10,11 @@ directFriends = await User.find({id}).lean().friends;
 // but that person couldn't be one of direct friends, or the begin person
 
 friendsOfFriends = await User.distinct(id, {
-    friends: { $in: directFriends },
-    id: { $nin: directFriends },
-    id: { $ne: id }
+    $and: [
+    {friends: { $in: directFriends }},
+    {id: { $nin: directFriends }},
+    {id: { $ne: id }}
+    ],
 })
 
 // III Suggested firends
