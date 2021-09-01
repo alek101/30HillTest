@@ -28,10 +28,12 @@ directFriends = await User.find({id}).lean().friends;
 suggestFriends = await User.aggregate([
     { 
         $match: {
-            friends: { $in: directFriends },
-            id: { $nin: directFriends },
-            id: { $ne: id }
-        }
+            $and: [
+            {friends: { $in: directFriends }},
+            {id: { $nin: directFriends }},
+            {id: { $ne: id }}
+            ] 
+        }      
     },
     {
         $group: { 
